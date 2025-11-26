@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the input file exists
-if [ ! -f "challenges.yml" ]; then
+if  '[[' ! -f "challenges.yml" ]; then
     echo "Error: challenges.yml not found"
     exit 1
 fi
