@@ -2,7 +2,7 @@
 
 # Check if the input file exists
 if [[ ! -f "challenges.yml" ]]; then
-    echo "Error: challenges.yml not found"
+    echo "Error: challenges.yml not found" >&2
     exit 1
 fi
 
