@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if the input file exists
-if  '[[' ! -f "challenges.yml" ]; then
+if [[ ! -f "challenges.yml" ]]; then
     echo "Error: challenges.yml not found"
     exit 1
 fi
@@ -11,11 +11,11 @@ in_hints=false
 hints_buffer=""
 current_key=""
 
-while IFS= read -r line || [ -n "$line" ]; do
+while IFS= read -r line || [[ -n "$line" ]]; do
     # When a new challenge begins, process the previous one
     if [[ "$line" =~ ^[[:space:]]*-[[:space:]]*$ ]]; then
         # Save the previous challenge if it had hints
-        if [ -n "$current_key" ] && [ -n "$hints_buffer" ]; then
+        if [[ -n "$current_key" && -n "$hints_buffer" ]]; then
             echo -n "$hints_buffer" > "../../partials/hints/${current_key}.adoc"
         fi
         # Reset variables for the new challenge
@@ -35,7 +35,7 @@ while IFS= read -r line || [ -n "$line" ]; do
     if [[ "$line" =~ ^[[:space:]]*hints:[[:space:]]*$ ]]; then
         in_hints=true
         continue
-    elif [ "$in_hints" = true ]; then
+    elif [[ "$in_hints" == true ]]; then
         if [[ "$line" =~ ^[[:space:]]*-[[:space:]]*\'?([^\']+)\'?[[:space:]]*$ ]]; then
             hint="${BASH_REMATCH[1]}"
             hints_buffer="${hints_buffer}* ${hint}"$'\n'
@@ -46,6 +46,6 @@ while IFS= read -r line || [ -n "$line" ]; do
 done < challenges.yml
 
 # Process the last challenge
-if [ -n "$current_key" ] && [ -n "$hints_buffer" ]; then
+if [[ -n "$current_key" && -n "$hints_buffer" ]]; then
     echo -n "$hints_buffer" > "../../partials/hints/${current_key}.adoc"
 fi
